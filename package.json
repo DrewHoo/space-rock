@@ -1,0 +1,41 @@
+{
+  "name": "meteorite-explorer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "antd": "^6.3.1",
+    "es-toolkit": "^1.30.0",
+    "@duckdb/duckdb-wasm": "^1.33.1-dev18.0",
+    "@observablehq/plot": "^0.6.17",
+    "d3-geo": "^3.1.1",
+    "d3-geo-projection": "^4.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@duckdb/node-api": "^1.4.4-r.2",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/d3-geo": "^3.1.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/topojson-client": "^3.1.5",
+    "@vitejs/plugin-react": "^5.1.1",
+    "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  }
+}
