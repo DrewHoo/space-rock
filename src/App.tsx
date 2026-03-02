@@ -1,79 +1,27 @@
-import { debounce } from "es-toolkit";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { DetailPanel } from "./components/DetailPanel";
 import { FilterPanel } from "./components/FilterPanel";
 import { MapView } from "./components/MapView";
 import { ProjectionPicker } from "./components/ProjectionPicker";
 import { SummaryStats } from "./components/SummaryStats";
-import { useDuckDB } from "./hooks/useDuckDB";
-import { useFilters } from "./hooks/useFilters";
+import { useDuckDbFilteredData } from "./hooks/useDuckDbFilteredData";
 import type { ProjectionKey } from "./lib/projections";
 import type { Meteorite } from "./types/meteorite";
 
 function App() {
-  const { query, ready, error: dbError } = useDuckDB();
-  const { filters, updateFilter, resetFilters, buildWhereClause } =
-    useFilters();
+  const {
+    data,
+    totalCount,
+    filters,
+    updateFilter,
+    resetFilters,
+    ready,
+    error,
+    query,
+  } = useDuckDbFilteredData();
 
-  const [data, setData] = useState<Meteorite[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
   const [projection, setProjection] = useState<ProjectionKey>("equal-earth");
   const [selected, setSelected] = useState<Meteorite | null>(null);
-  const [_loading, setLoading] = useState(true);
-
-  // Fetch total count on init
-  useEffect(() => {
-    if (!ready) return;
-    query("SELECT COUNT(*)::INT as count FROM meteorites").then((rows) => {
-      setTotalCount(Number(rows[0].count));
-    });
-  }, [ready, query]);
-
-  const queryRef = useRef(query);
-  const readyRef = useRef(ready);
-  const buildWhereClauseRef = useRef(buildWhereClause);
-  queryRef.current = query;
-  readyRef.current = ready;
-  buildWhereClauseRef.current = buildWhereClause;
-
-  const runFilteredQueryRef = useRef<ReturnType<
-    typeof debounce<() => void>
-  > | null>(null);
-  if (!runFilteredQueryRef.current) {
-    runFilteredQueryRef.current = debounce(
-      () => {
-        const q = queryRef.current;
-        if (!readyRef.current || !q) return;
-        const where = buildWhereClauseRef.current();
-        setLoading(true);
-        q(
-          `SELECT name, id, nametype, recclass, class_group, mass, fall, year, reclat, reclong
-         FROM meteorites
-         WHERE ${where}
-         ORDER BY year`,
-        )
-          .then((rows) => {
-            setData(rows as unknown as Meteorite[]);
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.error("Query error:", err);
-            setLoading(false);
-          });
-      },
-      300,
-      { edges: ["leading", "trailing"] },
-    );
-  }
-  const runFilteredQuery = runFilteredQueryRef.current;
-
-  // Fetch filtered data when filters change (debounced 300ms). filters in deps required so effect re-runs and invokes debounced query.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: filters intentionally in deps to trigger debounced query on filter change
-  useEffect(() => {
-    if (!ready) return;
-    runFilteredQuery();
-    return () => runFilteredQuery.cancel();
-  }, [ready, filters, runFilteredQuery]);
 
   const handleSelect = useCallback((meteorite: Meteorite | null) => {
     setSelected(meteorite);
@@ -94,10 +42,10 @@ function App() {
     [query],
   );
 
-  if (dbError) {
+  if (error) {
     return (
       <div className="h-full flex items-center justify-center text-red-600">
-        Failed to load database: {dbError}
+        Failed to load database: {error}
       </div>
     );
   }

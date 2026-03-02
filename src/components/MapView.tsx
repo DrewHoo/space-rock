@@ -107,7 +107,7 @@ export function MapView({ data, projection, onSelect }: MapViewProps) {
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-hidden bg-white rounded-lg"
+      className="w-full overflow-hidden pl-4 pr-4 bg-white"
     />
   );
 }

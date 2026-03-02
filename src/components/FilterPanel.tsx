@@ -33,7 +33,7 @@ interface FilterPanelProps {
 }
 
 const INITIAL_X = 16;
-const INITIAL_Y = 16;
+const INITIAL_Y = 48;
 
 export function FilterPanel({
   filters,
@@ -188,7 +188,7 @@ export function FilterPanel({
           <div>
             <div className="flex items-center gap-1.5 mb-1">
               <span className="text-xs font-medium text-gray-600">
-                Fall / Found
+                Fell / Found
               </span>
               <Tooltip
                 title={
