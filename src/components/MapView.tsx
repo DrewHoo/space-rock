@@ -28,10 +28,9 @@ const CLASS_COLORS: Record<MeteoriteClass, string> = {
 interface MapViewProps {
   data: Meteorite[];
   projection: ProjectionKey;
-  onSelect: (meteorite: Meteorite | null) => void;
 }
 
-export function MapView({ data, projection, onSelect }: MapViewProps) {
+export function MapView({ data, projection }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,22 +86,9 @@ export function MapView({ data, projection, onSelect }: MapViewProps) {
       ],
     });
 
-    // Add click handler for meteorite selection
-    plot.addEventListener("click", (event: Event) => {
-      const target = event.target as SVGElement;
-      if (target.tagName === "circle") {
-        const title = target.querySelector("title")?.textContent;
-        if (title) {
-          const name = title.split("\n")[0];
-          const match = data.find((d) => d.name === name);
-          if (match) onSelect(match);
-        }
-      }
-    });
-
     containerRef.current.replaceChildren(plot);
     return () => plot.remove();
-  }, [data, projection, onSelect]);
+  }, [data, projection]);
 
   return (
     <div

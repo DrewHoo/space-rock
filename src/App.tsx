@@ -1,12 +1,10 @@
 import { useCallback, useState } from "react";
-import { DetailPanel } from "./components/DetailPanel";
 import { FilterPanel } from "./components/FilterPanel";
 import { MapView } from "./components/MapView";
 import { ProjectionPicker } from "./components/ProjectionPicker";
 import { SummaryStats } from "./components/SummaryStats";
 import { useDuckDbFilteredData } from "./hooks/useDuckDbFilteredData";
 import type { ProjectionKey } from "./lib/projections";
-import type { Meteorite } from "./types/meteorite";
 
 function App() {
   const {
@@ -21,11 +19,6 @@ function App() {
   } = useDuckDbFilteredData();
 
   const [projection, setProjection] = useState<ProjectionKey>("equal-earth");
-  const [selected, setSelected] = useState<Meteorite | null>(null);
-
-  const handleSelect = useCallback((meteorite: Meteorite | null) => {
-    setSelected(meteorite);
-  }, []);
 
   const fetchMeteoriteNames = useCallback(
     async (search: string): Promise<{ label: string; value: string }[]> => {
@@ -73,7 +66,6 @@ function App() {
           <MapView
             data={data}
             projection={projection}
-            onSelect={handleSelect}
           />
           <FilterPanel
             filters={filters}
@@ -83,7 +75,6 @@ function App() {
             filteredCount={data.length}
             fetchMeteoriteNames={fetchMeteoriteNames}
           />
-          <DetailPanel meteorite={selected} onClose={() => setSelected(null)} />
         </div>
         <SummaryStats data={data} projection={projection} />
       </main>
