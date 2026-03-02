@@ -1,7 +1,7 @@
 import { Segmented, Slider, Tooltip } from "antd";
 import { useCallback, useRef, useState } from "react";
 import type { FilterState, MeteoriteClass } from "../types/meteorite";
-import { DebounceSelect } from "./DebounceSelect";
+// import { DebounceSelect } from "./DebounceSelect";
 import { WikiTag } from "./WikiDrawer";
 
 const CLASS_GROUPS: MeteoriteClass[] = [
@@ -41,7 +41,7 @@ export function FilterPanel({
   onReset,
   totalCount,
   filteredCount,
-  fetchMeteoriteNames,
+  // fetchMeteoriteNames,
 }: FilterPanelProps) {
   const [position, setPosition] = useState({ x: INITIAL_X, y: INITIAL_Y });
   const dragRef = useRef<{
