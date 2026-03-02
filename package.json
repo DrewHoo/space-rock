@@ -8,17 +8,19 @@
     "build": "tsc -b && vite build",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-3000}"
   },
   "dependencies": {
-    "antd": "^6.3.1",
-    "es-toolkit": "^1.30.0",
     "@duckdb/duckdb-wasm": "^1.33.1-dev18.0",
     "@observablehq/plot": "^0.6.17",
+    "antd": "^6.3.1",
     "d3-geo": "^3.1.1",
     "d3-geo-projection": "^4.0.0",
+    "es-toolkit": "^1.30.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "serve": "^14.2.5",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2",
     "zod": "^4.3.6"
