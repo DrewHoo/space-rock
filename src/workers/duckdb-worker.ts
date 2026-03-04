@@ -15,8 +15,8 @@ async function init() {
 
   conn = await db.connect();
 
-  // Load the parquet file
-  const response = await fetch("/data/meteorites.parquet");
+  // Load the parquet file (relative so it respects the deployed base path)
+  const response = await fetch("data/meteorites.parquet");
   const buffer = await response.arrayBuffer();
   await db.registerFileBuffer("meteorites.parquet", new Uint8Array(buffer));
 
