@@ -2,16 +2,6 @@
 
 Interactive, browser-based exploration of NASA's Meteorite Landings dataset. The app renders tens of thousands of meteorite records on a world map and lets you filter by year, mass, classification, and fall/found status — all powered by DuckDB running entirely in the browser via WebAssembly.
 
-## Live site
-
-If you publish this project to GitHub Pages, the app will typically be available at:
-
-- `https://<your-github-username>.github.io/<repo-name>/`
-
-Once you have the actual URL, replace the placeholder above and/or add a direct link here, for example:
-
-- `https://<your-github-username>.github.io/space-rock/`
-
 ## Where the data comes from
 
 ### Source dataset
