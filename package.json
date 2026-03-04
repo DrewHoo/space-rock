@@ -9,7 +9,8 @@
     "lint": "biome check .",
     "format": "biome format --write .",
     "preview": "vite preview",
-    "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-3000}"
+    "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-3000}",
+    "deploy:pages": "npm run build && rm -rf docs && cp -R dist docs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "^1.33.1-dev18.0",
